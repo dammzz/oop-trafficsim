@@ -14,16 +14,32 @@ class RoadTile {
 	public:
 		RoadTile (tRoadTileType t, int row, int col); 
 		void draw(); 
+		setWindow();
 };
 
-RoadTile(tRoadTileType t, int row, int col) {
+RoadTile::RoadTile(tRoadTileType t, int row, int col) {
+
+typedef enum {
+ LEFT_T_JUNCTION,
+ RIGHT_T_JUNCTION,
+ 
+}tRoadTile; 
+
+x = col * 239;
+y = row * 239; 
+	
 //	row: Row number for the tile 
 //	col: Column number for the tile  
 //	t: Tile type (one of the available tile types, such as left t-junction, crossjunction, top-left corner, etc.) 
 }
 
-void draw(){
+void RoadTile::draw(){
 //	Draws the tile to screen 
+} 
+
+void RoadTile::setWindow(sf::RenderWindow *window)
+{
+ this->window = window;
 } 
 
 
@@ -91,11 +107,66 @@ int getNext(){
 }
 
 void getPosition(float &x, float &y, float &dir){
+	return x, y, dir;
 //	Returns the x, y coordinates and the direction of the waypoint 
 }
 
 void draw(){
-//	Draws the waypoint to the screen
+	window.draw();
 }
  
+////////////////////main function//////////////////////
+
+int main() {
+	
+	
+	sf::RenderWindow window(sf::VideoMode(800, 600), "Traffic Simulator", sf::Style::Close | sf::Style::Titlebar | sf::Style::Resize);
+	sf::Texture texture;     
+	if (!texture.loadFromFile("images/vehicles/car6.png"))     
+	{         
+	cout << "Could not find the image file" << endl;     
+	}
+	sf::Sprite sprite;     
+	sprite.setTexture(texture);          
+	int x = 150;     
+	int y = 150;     
+	int increment = 1;
+	sf::FloatRect boundingBox = sprite.getGlobalBounds(); 
+	sprite.setOrigin(sf::Vector2f(boundingBox.width / 2, boundingBox.height / 2)); 
+	
+	while (window.isOpen())  {
+		sf::Event event;        
+	 while (window.pollEvent(event))         
+	 {             
+	 	if (event.type == sf::Event::Closed)                 
+	  
+	 		 window.close();         
+	  	}
+		  window.clear(sf::Color::White);
+		  
+		  sprite.setPosition(x, y);
+		  
+		  window.draw(sprite);
+		  
+		  window.display(); 
+		  
+		  x+= increment;         
+		  if (x == 300) { 
+		  	
+		  	sprite.setRotation(180);
+		  	increment = -1;             
+		    }    
+		    else if (x == 150)          
+			{  
+			sprite.setRotation(0);
+			increment = 1;        
+			}  
+			sf::sleep(sf::seconds(0.01f));     
+		  }     
+		             
+	}  
+	
+	
+	return 0;
+}
 
