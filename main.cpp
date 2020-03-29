@@ -19,14 +19,11 @@ class RoadTile {
 
 RoadTile::RoadTile(tRoadTileType t, int row, int col) {
 
-typedef enum {
- LEFT_T_JUNCTION,
- RIGHT_T_JUNCTION,
- 
-}tRoadTile; 
-
-x = col * 239;
-y = row * 239; 
+	texture.loadFromFile("images/roadpieces");
+	sprite.setTexture(texture);
+	
+		x = col * 239;
+		y = row * 239;
 	
 //	row: Row number for the tile 
 //	col: Column number for the tile  
@@ -57,14 +54,16 @@ class Vehicle {
 };
 
 
-Vehicle(tVehicleType t, float x, float y, float angle){
-//	 t: Vehicle type (one of the available vehicle types)
+Vehicle::Vehicle(tVehicleType t, float x, float y, float angle){
+	texture.loadFromFile("images/vehicles/car6");
+	sprite.setTexture(texture);
+	
 //	 x: x coordinate of the current vehicle position 
 // 	 y: y coordinate of the current vehicle position
 //	 angle: vehicle heading angle, i.e., orientation
 }
 
-void move(float &x, float &y, float &angle){
+void Vehicle::move(float &x, float &y, float &angle){
 //	x: x coordinate to move the vehicle to 
 //	y: y coordinate to move the vehicle to
 //	angle: new vehicle heading angle after the move 
@@ -88,7 +87,7 @@ class Waypoint{
 		void draw(); 
 };
 
-Waypoint(tWaypointDir dir, tRoadTileType type, int row, int col, int idx, int next1, int next2, int next3){
+Waypoint::Waypoint(tWaypointDir dir, tRoadTileType type, int row, int col, int idx, int next1, int next2, int next3){
 	
 //	dir: Waypoint direction 
 //	type: Road tile type this waypoint belongs to 
@@ -101,72 +100,84 @@ Waypoint(tWaypointDir dir, tRoadTileType type, int row, int col, int idx, int ne
 	
 }
 
-int getNext(){
+int Waypoint::getNext(){
 //	Returns the index of the next waypoint. 
 //If there are alternative waypoints, returns the index of one of them randomly 
 }
 
-void getPosition(float &x, float &y, float &dir){
+void Waypoint::getPosition(float &x, float &y, float &dir){
 	return x, y, dir;
 //	Returns the x, y coordinates and the direction of the waypoint 
 }
 
-void draw(){
-	window.draw();
-}
+
  
 ////////////////////main function//////////////////////
 
-int main() {
+,0);
+	spr6.setPosition(119.5,0);
+	spr7.setPosition(239,0);
+	spr12.setPosition(358.5,0);
+	spr2.setPosition(478,0);
+	spr5.setPosition(0,119.5);
+	spr17.setPosition(239,119.5);
+	spr18.setPosition(478,119.5);
+	spr9.setPosition(0,239);
+	spr13.setPosition(119.5,239);
+	spr11.setPosition(239,239);
+	spr14.setPosition(358.5,239);
+	spr10.setPosition(478,239);
+	spr19.setPosition(0,358.5);
+	spr20.setPosition(239,358.5);
+	spr21.setPosition(478,358.5);
+	spr3.setPosition(0,478);
+	spr15.setPosition(119.5,478);
+	spr8.setPosition(239,478);
+	spr16.setPosition(358.5,478);
+	spr4.setPosition(478,478);
+
 	
-	
-	sf::RenderWindow window(sf::VideoMode(800, 600), "Traffic Simulator", sf::Style::Close | sf::Style::Titlebar | sf::Style::Resize);
-	sf::Texture texture;     
-	if (!texture.loadFromFile("images/vehicles/car6.png"))     
-	{         
-	cout << "Could not find the image file" << endl;     
+		
+		while ( window.isOpen()) {
+			
+			sf::Event event;
+			
+			while(window.pollEvent(event)){
+			
+				window.clear();
+				window.draw(spr1);
+				window.draw(spr2);
+				window.draw(spr3);
+				window.draw(spr4);
+				window.draw(spr5);
+				window.draw(spr6);
+				window.draw(spr7);
+				window.draw(spr8);
+				window.draw(spr9);
+				window.draw(spr10);
+				window.draw(spr11);
+				window.draw(spr12);
+				window.draw(spr13);
+				window.draw(spr14);
+				window.draw(spr15);
+				window.draw(spr16);
+				window.draw(spr17);
+				window.draw(spr18);
+				window.draw(spr19);
+				window.draw(spr20);
+				window.draw(spr21);
+				
+				window.display();
 	}
-	sf::Sprite sprite;     
-	sprite.setTexture(texture);          
-	int x = 150;     
-	int y = 150;     
-	int increment = 1;
-	sf::FloatRect boundingBox = sprite.getGlobalBounds(); 
-	sprite.setOrigin(sf::Vector2f(boundingBox.width / 2, boundingBox.height / 2)); 
+	   
 	
-	while (window.isOpen())  {
-		sf::Event event;        
-	 while (window.pollEvent(event))         
-	 {             
-	 	if (event.type == sf::Event::Closed)                 
-	  
-	 		 window.close();         
-	  	}
-		  window.clear(sf::Color::White);
-		  
-		  sprite.setPosition(x, y);
-		  
-		  window.draw(sprite);
-		  
-		  window.display(); 
-		  
-		  x+= increment;         
-		  if (x == 300) { 
-		  	
-		  	sprite.setRotation(180);
-		  	increment = -1;             
-		    }    
-		    else if (x == 150)          
-			{  
-			sprite.setRotation(0);
-			increment = 1;        
-			}  
-			sf::sleep(sf::seconds(0.01f));     
-		  }     
-		             
+}
+  
+		    	return 0;         
 	}  
 	
-	
-	return 0;
-}
+
+
+
+
 
